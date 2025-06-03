@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Glosario de Apuestas - RUSHAPOBETS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2575fc;
+      --bg-gradient: linear-gradient(to right, #6a11cb, #2575fc);
+      --bg-card: rgba(255, 255, 255, 0.1);
+      --bg-card-hover: rgba(255, 255, 255, 0.2);
+      --text-color: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: var(--bg-card);
+      padding: 30px 20px;
+      border-radius: 16px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .header {
+      position: relative;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .logo {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      max-height: 80px;
+      height: auto;
+      width: auto;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+
+    .search-box {
+      text-align: center;
+      margin: 25px 0;
+    }
+
+    .search-box input {
+      width: 90%;
+      max-width: 400px;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+
+    .entry {
+      background: var(--bg-card);
+      padding: 15px 20px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .entry:hover {
+      background: var(--bg-card-hover);
+      transform: scale(1.01);
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .entry h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .entry .definition {
+      display: none;
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    button {
+      background: #fff;
+      color: var(--primary-color);
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover:not(:disabled) {
+      transform: scale(1.05);
+    }
+
+    button:disabled {
+      background: #ccc;
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    .page-info {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        text-align: center;
+      }
+
+      .header h1 {
+        font-size: 1.5rem;
+        padding-right: 80px;
+      }
+
+      .logo {
+        max-height: 40px;
+        right: 10px;
+      }
+
+      .entry h2 {
+        font-size: 1rem;
+      }
+
+      .entry .definition {
+        font-size: 0.95rem;
+      }
+
+      button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Glosario de Apuestas - RUSHAPOBETS</h1>
+      <img src="logo.png" alt="Logo" class="logo" />
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="🔍 Buscar término..." oninput="filterGlossary()">
+    </div>
+
+    <div id="glosario"></div>
+
+    <div class="buttons">
+      <button onclick="prevPage()" id="prevBtn">⬅ Anterior</button>
+      <button onclick="nextPage()" id="nextBtn">Siguiente ➡</button>
+    </div>
+    <div class="page-info" id="pageInfo"></div>
+  </div>
+
+  <script>
+    const data = [
+      { term: "Bankroll", definition: "💰 Es el capital total disponible que un apostador destina exclusivamente para realizar apuestas deportivas. Gestionarlo correctamente es fundamental para la supervivencia a largo plazo. Debe estar separado del dinero destinado a gastos personales. Una gestión adecuada del bankroll implica definir cuántas unidades lo componen, cuánto se arriesga por jugada y cuándo ajustar la unidad ." },
+      { term: "Beneficio neto (Profit)", definition: "📈 Ganancia total acumulada, calculada como la diferencia entre lo apostado y lo ganado. Se mide en unidades o en dinero real. Es importante diferenciarlo del yield: podés tener un beneficio neto alto pero un yield bajo si apostás volúmenes grandes." },
+      { term: "Cold streak / Mala racha", definition: "🌧️ Serie prolongada de apuestas perdidas. Afecta emocionalmente y financieramente. Una buena gestión de stake y banca protege durante estas etapas. No hay que aumentar el stake para “recuperarse” (tilt), ya que eso suele agravar las pérdidas." },
+      { term: "Flat stake", definition: "📏 Método de staking en el que se apuesta siempre la misma cantidad (misma unidad), independientemente del grado de confianza en el pronóstico. Es muy usado por apostadores principiantes o quienes prefieren estabilidad a largo plazo. Aunque reduce el riesgo, puede desaprovechar oportunidades con apuestas de mayor valor." },
+      { term: "Gestión de banca (Bankroll Management)", definition: "📊 Estrategia para administrar el bankroll de forma disciplinada. Incluye reglas como: no apostar más del 1-5% por jugada, ajustar la unidad tras una mala racha, evitar “all-ins” o apuestas impulsivas, etc. Es la base para evitar el quiebre de banca. Los mejores apostadores priorizan la gestión del bankroll incluso por encima del % de acierto." },
+      { term: "Kelly Criterion (Fórmula de Kelly)", definition: "📐 Fórmula matemática para determinar el stake óptimo según el valor esperado de la apuesta. Es muy utilizada en apuestas avanzadas. La fórmula general es: Stake = (bp − q) / b  Donde:  b = cuota decimal − 1,  p = probabilidad estimada, q = 1 − p. Por ejemplo, si creés que un resultado tiene un 60% de probabilidad (p = 0.60) y la cuota es 2.10, el stake recomendado sería del 14%. El criterio de Kelly busca maximizar beneficios y minimizar riesgo, pero mal usado puede ser peligroso.   " },
+      { term: "Overbetting", definition: "🚫 Apostar más de lo recomendado según el bankroll o el valor real del pronóstico. Es uno de los errores más comunes entre apostadores inexpertos. Puede llevar al quiebre de banca incluso si el % de acierto es alto." },
+      { term: "Pérdida máxima (Drawdown)", definition: "📉 Es la mayor caída del bankroll desde un pico anterior. Se usa para medir cuánto riesgo asume una estrategia. Por ejemplo, si tu banca crece a 1.500.000 Gs y cae a 1.000.000 Gs, el drawdown es de 500.000 Gs. Controlar esta métrica es clave para sobrevivir rachas negativas." },
+      { term: "ROI (Return on Investment)", definition: "🔁 Retorno sobre la inversión. Es equivalente al yield, aunque a veces se usa como sinónimo más general. En apuestas, cuanto mayor sea el ROI, mejor está funcionando la estrategia aplicada." },
+      { term: "Stake", definition: "🎯 Cantidad de unidades que se apuestan en una jugada determinada. Representa el nivel de confianza del apostador en ese pronóstico. Suele expresarse en una escala del 1 al 10, donde 1 es una apuesta con muy bajo riesgo/confianza y 10 una apuesta muy fuerte. Por ejemplo, si tu banca total es de 1000 Gs, un stake 5 podría equivaler a 50 Gs. Es clave para gestionar el bankroll de forma responsable y medir el ROI (retorno sobre inversión) correctamente ." },
+      { term: "Unidad", definition: "⚖️ Es la cantidad fija que representa una fracción del bankroll total, usada como referencia para asignar stake. Por ejemplo, si tu bankroll es de 1.000.000 Gs y decidís que tu unidad es el 1%, cada unidad será de 10.000 Gs. Apostar “2 unidades” implica arriesgar 20.000 Gs. Usar unidades permite estandarizar los resultados y compararlos entre distintos apostadores o estrategias." },
+      { term: "Value staking", definition: "💎 Estrategia en la que el stake se asigna en función del valor percibido en la cuota (cuanto mayor el valor, mayor el stake). Se suele combinar con análisis estadístico, % implícitos de probabilidad y xG en fútbol. Requiere experiencia y buen manejo de banca." },
+      { term: "Variable stake", definition: "📶 Se asigna el stake según el nivel de confianza o valor esperado de la apuesta. Es el método recomendado para apostadores intermedios o avanzados. Por ejemplo, un stake 3 se asigna a una apuesta dudosa, mientras que un stake 8 a una con mucha value. Es un método más arriesgado pero también más rentable si se aplica correctamente." },
+      { term: "Saldo de apuesta (Bankroll)", definition: "📊 Métrica que mide el rendimiento de tus apuestas en relación con el total apostado. Se calcula como:   Yield (%) = (Ganancia neta / Total apostado) × 100. Por ejemplo, si ganás 200 Gs y apostaste un total de 2.000 Gs, tu yield es del 10%. Un yield positivo y constante (+5% o más) indica buena rentabilidad a largo plazo." },
+      { term: "Teaser", definition: "📊 Apuesta combinada (multi) en la que el apostador mueve las líneas del hándicap a su favor, pero a costa de reducir las cuotas. Es común en la NBA o NFL, donde por ejemplo se puede tomar un spread de -6,5 y “teasearlo” a -1,5. Se trata de un mercado avanzado porque combina varias selecciones con márgenes modificados; requiere ganar todas las selecciones ajustadas para cobrar." },
+      { term: "Diferencial de puntos (Spread betting)", definition: "📊 Aunque no es un mercado típico en apuestas deportivas convencionales, el spread betting es un tipo de apuesta sobre la diferencia en el marcador final. En esta modalidad el pago varía según el margen de victoria real comparado con el spread establecido; no es muy común en apuestas tradicionales en español, pero vale conocerlo para ligas con amplia cobertura de spread, como la NBA o el fútbol americano." },
+      { term: "H2H (Head-to-Head)", definition: "📊 Término inglés que se refiere a apostar simplemente al ganador de un partido sin considerar empates. Equivale a apostar en 1X2 pero excluyendo la opción del empate. Se usa más en deportes donde se considera improbable el empate (por ejemplo, en partidos de eliminatoria directa o en competiciones sin opción de empate)." },
+      { term: "Pick’em", definition: "📊 Mercado en el que el hándicap se ha establecido de forma que no hay favorito claro, por lo que ambas cuotas son iguales o muy parecidas. Se usa en mercados asiáticos cuando el hándicap es cero o muy pequeño. En UFC o tenis, un pick’em se usaría si se considera que ambos luchadores tienen la misma probabilidad de ganar; en la práctica, la apuesta pick’em devuelve la unidad apostada a cada lado si se apuesta en hándicap fraccional (0 & ½, por ejemplo) en ciertos sistemas." },
+      { term: "Eficiencia (baloncesto)", definition: "📊  Índices que miden el rendimiento de un jugador o equipo más allá de estadísticas básicas. Por ejemplo, el Índice de eficiencia suma puntos, rebotes, asistencias, robos y tapones, restando pérdidas y tiros fallados, todo ello ponderado en minutos jugados. En apuestas no se suele usar directamente, pero sirve para comparar la productiv" },
+      { term: "Control (MMA)", definition: "📊 Tiempo que un peleador mantiene al rival inmovilizado en el suelo durante la pelea. Aunque no suele ser un mercado de apuesta, sí es estadística oficial en UFC. El tiempo de control puede dar indicios: un luchador con mucho control suele ganar los rounds (según criterios de árbitros). Los analistas de apuestas revisan esta métrica para evaluar la dominancia de un grappler frente a un striker." },
+      { term: "Datos avanzados (Big Data)", definition: "📊 Se refiere al uso de estadísticas avanzadas para apostar de forma informada. Incluye modelos predictivos (simulaciones, métricas como xG, SPI en fútbol; net rating en basket; statisticas de puños/takedowns en UFC). Los apostadores intermedios usan estas métricas para encontrar valor o mejorar sus pronósticos, complementando el instinto con análisis numérico." },
+      { term: "Apuesta combinada (Parlay)", definition: "📊 Apuesta que agrupa dos o más selecciones de eventos diferentes en una sola apuesta. Para ganar una apuesta combinada todas las selecciones deben acertarse; por ejemplo, combinar varios partidos de fútbol o baloncesto. Este tipo de apuesta ofrece cuotas más altas, pero también un riesgo mayor porque basta fallar una selección para perder la apuesta." },
+      { term: "Apuesta de sistema", definition: "📊 Modalidad que combina varias apuestas simples o múltiples (combinadas) sobre un conjunto de selecciones. A diferencia de la combinada pura, en un sistema no es necesario acertar todos los pronósticos para obtener ganancias. Por ejemplo, un sistema «2/3» de tres selecciones permite ganar aunque se fallen una o dos, siempre que se cumplan los requisitos del sistema." },
+      { term: "Apuesta en vivo (In-play)", definition: "📊 Apuesta que se realiza mientras el evento deportivo ya está en curso. Las cuotas cambian dinámicamente en tiempo real según el desarrollo del partido o combate. Estas apuestas permiten reaccionar a jugadas recientes (un gol, un canasto, un derribo) y ofrecen muchos mercados especiales, pero también exigen tomar decisiones rápidas." },
+      { term: "Apuesta simple", definition: "📊 Apuesta realizada sobre un único resultado o mercado de un evento deportivo. Se apuesta a favor o en contra de un solo suceso (por ejemplo, que un equipo gane el partido) y, si se acierta, se cobra el premio. Es la forma más básica de apuesta deportiva." },
+      { term: "Apuesta sin empate (Draw No Bet, DNB)", definition: "📊 Variante de apuesta en la que solo se puede apostar a la victoria de uno de los equipos. Si el partido termina empate, la apuesta queda anulada y se devuelve el importe apostado. En la práctica equivale a un hándicap asiático 0.0; por ejemplo, en fútbol o baloncesto si el equipo favorito no gana (por perder o empatar), la apuesta se anula y el apostador recupera su dinero." },
+      { term: "Apuesta de valor (Valuebet)", definition: "📊 Apuesta en la que la cuota ofrecida por la casa de apuestas es superior a la probabilidad real del resultado, según el análisis del apostador. En otras palabras, el apostador estima que la probabilidad de que ocurra el evento es mayor que la implícita en la cuota. Las apuestas de valor tienen esperanza de ganancia positiva; es decir, son oportunidades donde las ganancias potenciales compensan el riesgo." },
+      { term: "Cash Out", definition: "📊 Función que permite cerrar una apuesta antes de que finalice el evento, aceptando la cantidad que ofrece la casa en ese momento. De este modo el apostador asegura un beneficio o reduce pérdidas sin esperar al final del partido. Muchas casas ofrecen Cash Out en tiempo real en fútbol, baloncesto o peleas de UFC, especialmente cuando la apuesta va ganando o perdiendo de forma clara." },
+      { term: "Cuota (Odds)", definition: "📊 Número que indica cuánto se gana por cada unidad apostada en caso de acierto, reflejando la probabilidad implícita del resultado. Cuotas más bajas significan que el resultado es considerado más probable (y pagan menos), mientras que cuotas altas indican resultados menos probables (y pagan más). Por ejemplo, una cuota de 2.50 implica que por cada 1 apostado se ganarían 2.50 (incluyendo la unidad apostada) si el pronóstico se cumple. En fútbol, baloncesto o UFC, las cuotas ayudan a comparar expectativas de victoria de cada competidor." },
+      { term: "Goles esperados (xG, Expected Goals)", definition: "📊 Métrica avanzada de fútbol que estima la probabilidad de que cada ocasión de gol acabe en gol, sumando un valor esperado de goles para un equipo. Es un indicador estadístico que asigna a cada tiro una probabilidad de gol según factores como la posición y el tipo de remate. Por ejemplo, un tiro cercano desde el centro puede tener un xG de 0.50 (50% de probabilidad de gol). Sumando todos los xG de un partido se obtiene cuántos goles debería marcar un equipo en teoría, lo que ayuda a evaluar su rendimiento ofensivo independientemente del marcador real." },
+      { term: "Hándicap", definition: "🔁 Apuesta que da una ventaja o desventaja virtual (en goles o puntos) a un equipo para equilibrar el mercado. El equipo favorito comienza “con desventaja” y el bajo favorito con “ventaja”. Existen hándicaps con goles o puntos enteros (por ejemplo, -1.5, +2) y fraccionales. Se usa en deportes como fútbol, baloncesto o fútbol americano para nivelar las probabilidades. Por ejemplo, un hándicap -1.5 al favorito en fútbol implica que debe ganar por 2 o más goles para que la apuesta gane." },
+      { term: "Hándicap asiático (Asian Handicap)", definition: "🔁 Variante de hándicap que elimina la opción de empate ofreciendo solo dos posibles resultados. Consiste en asignar un déficit de goles/puntos al favorito y una ventaja al underdog, de manera que ambos queden con probabilidades cercanas al 50%. Se pueden usar fracciones (0.25, 0.5, 0.75, etc.) para ajustar resultados; así, por ejemplo, un hándicap +0.5 significa que al underdog se le añaden 0.5 goles al final, anulando en caso de empate. Si tras aplicar el hándicap el resultado es empate, la apuesta se anula (se devuelve el dinero)." },
+      { term: "KO (Knockout)", definition: "🔁  En UFC/MMA, victoria por nocaut. Se produce cuando un peleador es dejado inconsciente o gravemente aturdido por un golpe y no puede continuar la pelea. En las apuestas, predecir un KO significa apostar a que el combate terminará con un golpe determinante que deja fuera de combate a uno de los luchadores. Muchos mercados permiten apostar al número de rondas o al método (KO/TKO vs decisión vs sumisión)." },
+      { term: "Más/Menos (Over/Under)", definition: "🔁 Mercado en el que se apuesta a si el total de una estadística superará o no un número fijado por la casa. En fútbol suele utilizarse en goles totales (por ejemplo, Over 2.5 goles significa que se esperan 3 o más goles en el partido). En baloncesto se emplea en puntos totales del partido, rebotes u otras estadísticas. Apostar Más de X (Over) paga si el total supera X, mientras que Menos de X (Under) paga si se queda por debajo." },
+      { term: "Moneyline (Línea de dinero)", definition: "🔁 Apuesta al ganador de un evento sin hándicap ni margen de puntos. Simplemente se selecciona el equipo o peleador que se cree que ganará. Las cuotas determinan quién es favorito (cuota baja/negativa) y underdog (cuota alta/positiva). Este mercado es común en fútbol americano, baloncesto, hockey o UFC. Por ejemplo, una cuota de +150 en un luchador indica que es el menos favorito (apostar 100 daría 150 de ganancia si gana), mientras que −200 en su rival indicaría el favorito (hay que apostar 200 para ganar 100)." },
+      { term: "Puntos por posesión (OER, baloncesto)", definition: "🔁 Métrica avanzada de baloncesto que mide la eficiencia ofensiva: promedia cuántos puntos anota un equipo por cada posesión de balón. Se calcula como puntos anotados divididos por posesiones jugadas. En la práctica se asume que un equipo eficiente debe rondar al menos 1 punto por posesión para ganar partidos ￼. Se usa para comparar ataques y defensas: por ejemplo, un equipo con 1.10 puntos por posesión suele ser muy ofensivo, mientras que 0.90 indica baja eficiencia. El equivalente defensivo sería los puntos encajados por posesión del rival." },
+      { term: "Apuesta por ronda exacta (Round Betting, UFC)", definition: "🔁 Apuesta que predice en qué ronda terminará un combate de MMA, o si llegará hasta el final (fin de ronda final). Se pueden apostar opciones como “X pelea terminará en la ronda 2” o “pelea llegará a decisión”. Este mercado ofrece cuotas elevadas porque es difícil acertar exactamente cuándo acabará el encuentro. Por ejemplo, si se apuesta que una pelea terminará en la Ronda 3, el luchador ganador debe lograr el KO, TKO o sumisión en esa ronda concreta para ganar la apuesta." },
+      { term: "Sumisión (MMA)", definition: "📊 Victoria en UFC obtenida cuando un peleador hace que su oponente se rinda, normalmente dándole toques al tapete o verbalmente, mediante una llave, estrangulación o luxación que causa dolor. En apuestas, predecir una sumisión implica esperar que el ganador venza por técnicas de grappling (llaves de brazo, estrangulaciones, etc.) antes de que termine el tiempo. Las casas suelen pagar cuotas diferentes según los métodos, siendo la sumisión un mercado frecuente por las habilidades de agarre de algunos peleadores." },
+      { term: "Takedown", definition: "📊 En artes marciales mixtas, acción de derribar al oponente al suelo. Es parte de la técnica de grappling. En apuestas se usa como estadística (promedio de takedowns por pelea) y a veces se apuesta a que un luchador logrará un número específico de derribos. No es un mercado de apuesta independiente común, pero sirve en los análisis de rendimiento de los peleadores." },
+      { term: "TKO (Knockout técnico)", definition: "📊 Variante del KO. Ocurre cuando el árbitro detiene la pelea por nocaut sin que el peleador quede inconsciente, por ejemplo porque deja de defenderse inteligentemente tras recibir golpes continuos. En apuestas de UFC suele considerarse equivalente al KO: ambos son victoria por golpeo (detención antes de que finalice). Las casas pagan cuotas especiales si se elige “KO/TKO” frente a “sumisión” o “decisión”." },
+      { term: "Hándicap (Spread, margen de puntos)", definition: "📊 Apuesta que da una ventaja o desventaja virtual (en goles, canastas o puntos) a un equipo. El objetivo es nivelar las cuotas entre favorito y underdog. Por ejemplo, en baloncesto un hándicap de +5.5 para el underdog le otorga 5.5 puntos extra al final; el favorito debe ganar por 6 o más para que pague su apuesta. Este concepto es fundamental en mercados como el spread en la NBA o el hándicap europeo en fútbol." },
+      { term: "Ground and Pound", definition: "📊 Técnica en MMA donde un peleador derriba a su oponente al suelo y desde arriba lo golpea repetidamente. A nivel de apuestas es más un término de análisis: un luchador con estilo ground and pound tenderá a buscar el knockout desde arriba. No suele ser un mercado separado, pero afecta probabilidades en mercados combinados (por ejemplo, “ganador por KO/TKO”)." },
+      { term: "Clinch", definition: "📊 Posición en MMA donde ambos luchadores se agarran cuerpo a cuerpo, normalmente de pie. Desde el clinch se busca controlar al rival, golpear rodilla o codo, o preparar un derribo. En apuestas no es un mercado específico, pero sí se valora en pronósticos: un especialista en clinch puede ganar rondas en la lucha cuerpo a cuerpo aun sin derribar." },
+      { term: "Posesiones (baloncesto)", definition: "📊 La posesión se refiere al tiempo que un equipo controla el balón en cada jugada ofensiva. Aunque no es un término de apuesta, es la base para calcular métricas como puntos por posesión. Entender el número de posesiones de un partido ayuda a predecir totales de puntos: más posesiones tienden a aumentar la puntuación total." },
+
+    ];
+
+    data.sort((a, b) => a.term.localeCompare(b.term));
+
+    let filteredData = [...data];
+    const itemsPerPage = 4;
+    let currentPage = 1;
+
+    function renderGlossary() {
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const entries = filteredData.slice(start, end);
+
+      const container = document.getElementById('glosario');
+      container.innerHTML = "";
+
+      entries.forEach((item, index) => {
+        const entry = document.createElement('div');
+        entry.className = 'entry';
+
+        entry.innerHTML = `
+          <div class="entry-header" onclick="toggleDefinition(this)">
+            <h2>${item.term}</h2>
+            <span class="toggle-icon">➕</span>
+          </div>
+          <div class="definition">${item.definition}</div>
+        `;
+
+        container.appendChild(entry);
+      });
+
+      document.getElementById('prevBtn').disabled = currentPage === 1;
+      document.getElementById('nextBtn').disabled = end >= filteredData.length;
+      document.getElementById('pageInfo').textContent =
+        `Página ${currentPage} de ${Math.ceil(filteredData.length / itemsPerPage)}`;
+    }
+
+    function toggleDefinition(header) {
+      const definition = header.nextElementSibling;
+      const icon = header.querySelector('.toggle-icon');
+      const visible = definition.style.display === "block";
+
+      definition.style.display = visible ? "none" : "block";
+      icon.textContent = visible ? "➕" : "➖";
+    }
+
+    function nextPage() {
+      if (currentPage * itemsPerPage < filteredData.length) {
+        currentPage++;
+        renderGlossary();
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderGlossary();
+      }
+    }
+
+    function filterGlossary() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      filteredData = data.filter(item => item.term.toLowerCase().includes(query));
+      currentPage = 1;
+      renderGlossary();
+    }
+
+    renderGlossary();
+  </script>
+</body>
+</html>
