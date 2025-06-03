@@ -1,0 +1,2 @@
+# glosariorushapero
+Glosario de apuestas
